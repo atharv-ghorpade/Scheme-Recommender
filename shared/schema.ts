@@ -39,7 +39,9 @@ export const recommendations = pgTable("recommendations", {
 });
 
 // Zod Schemas
-export const insertProfileSchema = createInsertSchema(profiles).omit({ 
+export const insertProfileSchema = createInsertSchema(profiles).extend({
+  income: z.coerce.number(),
+}).omit({ 
   id: true, 
   updatedAt: true,
   userId: true 

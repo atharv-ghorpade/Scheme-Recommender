@@ -90,11 +90,11 @@ export function Navbar() {
               </DropdownMenu>
             </>
           ) : (
-            <Link href="/api/login">
+            <a href="/api/login">
               <Button className="font-semibold shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all">
                 Login / Register
               </Button>
-            </Link>
+            </a>
           )}
         </div>
       </div>

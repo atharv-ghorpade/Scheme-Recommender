@@ -35,6 +35,8 @@ const INDIAN_STATES = [
   "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"
 ];
 
+const CATEGORIES = ["General", "OBC", "SC", "ST"];
+
 export default function Profile() {
   const [, setLocation] = useLocation();
   const { data: profile, isLoading: isProfileLoading } = useProfile();
@@ -45,8 +47,9 @@ export default function Profile() {
     defaultValues: {
       state: "",
       landSize: "",
-      income: "",
+      income: 0,
       crop: "",
+      category: "General",
     },
   });
 
@@ -58,6 +61,7 @@ export default function Profile() {
         landSize: profile.landSize,
         income: profile.income,
         crop: profile.crop,
+        category: profile.category || "General",
       });
     }
   }, [profile, form]);
@@ -177,6 +181,28 @@ export default function Profile() {
                   </p>
                   {form.formState.errors.crop && (
                     <p className="text-sm text-destructive">{form.formState.errors.crop.message}</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="category">Category</Label>
+                  <Select 
+                    onValueChange={(val) => form.setValue("category", val)}
+                    defaultValue={form.getValues("category") || "General"}
+                  >
+                    <SelectTrigger className="w-full h-12 text-base">
+                      <SelectValue placeholder="Select your category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {CATEGORIES.map((cat) => (
+                        <SelectItem key={cat} value={cat}>
+                          {cat}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {form.formState.errors.category && (
+                    <p className="text-sm text-destructive">{form.formState.errors.category.message}</p>
                   )}
                 </div>
 

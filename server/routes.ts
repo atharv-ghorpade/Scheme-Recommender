@@ -20,14 +20,14 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
   // Profile Routes
   app.get(api.profile.get.path, async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
-    const userId = (req.user as any).id;
+    const userId = (req.user as any).claims.sub;
     const profile = await storage.getProfile(userId);
     res.json(profile || null);
   });
 
   app.post(api.profile.update.path, async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
-    const userId = (req.user as any).id;
+    const userId = (req.user as any).claims.sub;
     
     try {
       const input = api.profile.update.input.parse(req.body);
@@ -58,7 +58,7 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
   // Generate Recommendations
   app.post(api.recommendations.generate.path, async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
-    const userId = (req.user as any).id;
+    const userId = (req.user as any).claims.sub;
     const profile = await storage.getProfile(userId);
 
     if (!profile) {
@@ -74,12 +74,13 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
         
         Profile:
         State: ${profile.state}
-        Land Size: ${profile.landSize}
-        Income: ${profile.income}
+        Land Size: ${profile.landSize} acres
+        Income: ₹${profile.income}
         Crop: ${profile.crop}
+        Category: ${profile.category || "General"}
 
         Available Schemes:
-        ${allSchemes.map(s => `- ID: ${s.id}, Name: ${s.name}, Criteria: ${s.criteria}, State Filter: ${s.stateFilter || "All"}`).join('\n')}
+        ${allSchemes.map(s => `- ID: ${s.id}, Name: ${s.name}, Criteria: ${s.criteria || s.description}, State Filter: ${s.supportedStates?.join(", ") || "All"}`).join('\n')}
 
         Return a JSON array of objects, where each object has:
         - scheme_id: The ID of the matching scheme
@@ -89,7 +90,7 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
       `;
 
       const response = await openai.chat.completions.create({
-        model: "gpt-4o", // Using a smart model for reasoning
+        model: "gpt-5", // Using the latest gpt-5 model
         messages: [{ role: "user", content: prompt }],
         response_format: { type: "json_object" },
       });
