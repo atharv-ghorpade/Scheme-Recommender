@@ -126,64 +126,118 @@ async function seedSchemes() {
 
   const schemesData = [
     {
-      name: "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
-      description: "Income support of Rs. 6000/- per year to all landholding farmer families.",
-      benefit: "Rs. 6000 per year",
-      criteria: "Small and marginal farmers with land up to 2 hectares.",
-      stateFilter: null
+      "schemeId": "S001",
+      "name": "PM-KISAN Samman Nidhi",
+      "benefitAmount": 6000,
+      "maxIncome": 200000,
+      "minLand": "0",
+      "maxLand": "10",
+      "supportedStates": ["All"],
+      "eligibleCrops": ["All"],
+      "description": "Income support of Rs 6000 per year"
     },
     {
-      name: "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
-      description: "Crop insurance scheme providing financial support in case of crop failure.",
-      benefit: "Insurance cover against crop loss",
-      criteria: "Farmers growing notified crops in notified areas.",
-      stateFilter: null
+      "schemeId": "S002",
+      "name": "Pradhan Mantri Fasal Bima Yojana",
+      "benefitAmount": 50000,
+      "maxIncome": 300000,
+      "minLand": "0",
+      "maxLand": "20",
+      "supportedStates": ["All"],
+      "eligibleCrops": ["All"],
+      "description": "Crop insurance scheme"
     },
     {
-      name: "Kisan Credit Card (KCC)",
-      description: "Provides adequate and timely credit support to farmers.",
-      benefit: "Low interest loans",
-      criteria: "All farmers, tenant farmers, sharecroppers.",
-      stateFilter: null
+      "schemeId": "S003",
+      "name": "Kisan Credit Card",
+      "benefitAmount": 300000,
+      "maxIncome": 500000,
+      "minLand": "0.5",
+      "maxLand": "15",
+      "supportedStates": ["All"],
+      "eligibleCrops": ["All"],
+      "description": "Low interest credit loan"
     },
     {
-      name: "Soil Health Card Scheme",
-      description: "Provides information to farmers on nutrient status of their soil.",
-      benefit: "Soil health report and fertilizer recommendations",
-      criteria: "All farmers.",
-      stateFilter: null
+      "schemeId": "S004",
+      "name": "Soil Health Card Scheme",
+      "benefitAmount": 2000,
+      "maxIncome": 1000000,
+      "minLand": "0",
+      "maxLand": "50",
+      "supportedStates": ["All"],
+      "eligibleCrops": ["All"],
+      "description": "Provides soil testing support"
     },
     {
-      name: "Paramparagat Krishi Vikas Yojana (PKVY)",
-      description: "Promotes organic farming through cluster approach.",
-      benefit: "Financial assistance for organic farming",
-      criteria: "Farmers willing to adopt organic farming.",
-      stateFilter: null
+      "schemeId": "S005",
+      "name": "PM Krishi Sinchai Yojana",
+      "benefitAmount": 10000,
+      "maxIncome": 300000,
+      "minLand": "0.5",
+      "maxLand": "15",
+      "supportedStates": ["Maharashtra", "Karnataka", "Telangana"],
+      "eligibleCrops": ["Sugarcane", "Cotton", "Rice"],
+      "description": "Irrigation support scheme"
     },
     {
-      name: "Rythu Bandhu Scheme",
-      description: "Investment support scheme for farmers in Telangana.",
-      benefit: "Rs. 5000 per acre per season",
-      criteria: "Farmers owning land in Telangana.",
-      stateFilter: "Telangana"
+      "schemeId": "S006",
+      "name": "National Food Security Mission",
+      "benefitAmount": 8000,
+      "maxIncome": 250000,
+      "minLand": "0.5",
+      "maxLand": "10",
+      "supportedStates": ["Punjab", "Uttar Pradesh", "Bihar"],
+      "eligibleCrops": ["Rice", "Wheat"],
+      "description": "Increase food production"
     },
     {
-      name: "KALIA Scheme",
-      description: "Financial assistance to cultivators and landless agricultural laborers in Odisha.",
-      benefit: "Rs. 10000 per family per year",
-      criteria: "Small and marginal farmers, landless laborers in Odisha.",
-      stateFilter: "Odisha"
+      "schemeId": "S007",
+      "name": "Paramparagat Krishi Vikas Yojana",
+      "benefitAmount": 12000,
+      "maxIncome": 200000,
+      "minLand": "1",
+      "maxLand": "5",
+      "supportedStates": ["All"],
+      "eligibleCrops": ["Organic"],
+      "description": "Promotes organic farming"
     },
     {
-      name: "YSR Rythu Bharosa",
-      description: "Financial assistance to farmers in Andhra Pradesh.",
-      benefit: "Rs. 13500 per year",
-      criteria: "Farmer families in Andhra Pradesh.",
-      stateFilter: "Andhra Pradesh"
+      "schemeId": "S008",
+      "name": "Micro Irrigation Scheme",
+      "benefitAmount": 15000,
+      "maxIncome": 300000,
+      "minLand": "1",
+      "maxLand": "20",
+      "supportedStates": ["Maharashtra", "Gujarat"],
+      "eligibleCrops": ["Sugarcane", "Cotton"],
+      "description": "Supports drip irrigation"
+    },
+    {
+      "schemeId": "S009",
+      "name": "Dairy Entrepreneurship Development Scheme",
+      "benefitAmount": 50000,
+      "maxIncome": 400000,
+      "minLand": "0",
+      "maxLand": "10",
+      "supportedStates": ["All"],
+      "eligibleCrops": ["Dairy"],
+      "description": "Supports dairy farming"
+    },
+    {
+      "schemeId": "S010",
+      "name": "National Mission on Sustainable Agriculture",
+      "benefitAmount": 20000,
+      "maxIncome": 300000,
+      "minLand": "1",
+      "maxLand": "10",
+      "supportedStates": ["All"],
+      "eligibleCrops": ["Millets", "Pulses"],
+      "description": "Promotes sustainable farming"
     }
   ];
 
   for (const scheme of schemesData) {
-    await storage.createScheme(scheme);
+    await storage.createScheme(scheme as any);
   }
 }

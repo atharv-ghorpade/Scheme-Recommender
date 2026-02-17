@@ -1,0 +1,112 @@
+[
+  {
+    "scheme_id": "S001",
+    "name": "PM-KISAN Samman Nidhi",
+    "benefit_amount": 6000,
+    "max_income": 200000,
+    "min_land": 0,
+    "max_land": 10,
+    "supported_states": ["All"],
+    "eligible_crops": ["All"],
+    "description": "Income support of Rs 6000 per year"
+  },
+  {
+    "scheme_id": "S002",
+    "name": "Pradhan Mantri Fasal Bima Yojana",
+    "benefit_amount": 50000,
+    "max_income": 300000,
+    "min_land": 0,
+    "max_land": 20,
+    "supported_states": ["All"],
+    "eligible_crops": ["All"],
+    "description": "Crop insurance scheme"
+  },
+  {
+    "scheme_id": "S003",
+    "name": "Kisan Credit Card",
+    "benefit_amount": 300000,
+    "max_income": 500000,
+    "min_land": 0.5,
+    "max_land": 15,
+    "supported_states": ["All"],
+    "eligible_crops": ["All"],
+    "description": "Low interest credit loan"
+  },
+  {
+    "scheme_id": "S004",
+    "name": "Soil Health Card Scheme",
+    "benefit_amount": 2000,
+    "max_income": 1000000,
+    "min_land": 0,
+    "max_land": 50,
+    "supported_states": ["All"],
+    "eligible_crops": ["All"],
+    "description": "Provides soil testing support"
+  },
+  {
+    "scheme_id": "S005",
+    "name": "PM Krishi Sinchai Yojana",
+    "benefit_amount": 10000,
+    "max_income": 300000,
+    "min_land": 0.5,
+    "max_land": 15,
+    "supported_states": ["Maharashtra", "Karnataka", "Telangana"],
+    "eligible_crops": ["Sugarcane", "Cotton", "Rice"],
+    "description": "Irrigation support scheme"
+  },
+  {
+    "scheme_id": "S006",
+    "name": "National Food Security Mission",
+    "benefit_amount": 8000,
+    "max_income": 250000,
+    "min_land": 0.5,
+    "max_land": 10,
+    "supported_states": ["Punjab", "Uttar Pradesh", "Bihar"],
+    "eligible_crops": ["Rice", "Wheat"],
+    "description": "Increase food production"
+  },
+  {
+    "scheme_id": "S007",
+    "name": "Paramparagat Krishi Vikas Yojana",
+    "benefit_amount": 12000,
+    "max_income": 200000,
+    "min_land": 1,
+    "max_land": 5,
+    "supported_states": ["All"],
+    "eligible_crops": ["Organic"],
+    "description": "Promotes organic farming"
+  },
+  {
+    "scheme_id": "S008",
+    "name": "Micro Irrigation Scheme",
+    "benefit_amount": 15000,
+    "max_income": 300000,
+    "min_land": 1,
+    "max_land": 20,
+    "supported_states": ["Maharashtra", "Gujarat"],
+    "eligible_crops": ["Sugarcane", "Cotton"],
+    "description": "Supports drip irrigation"
+  },
+  {
+    "scheme_id": "S009",
+    "name": "Dairy Entrepreneurship Development Scheme",
+    "benefit_amount": 50000,
+    "max_income": 400000,
+    "min_land": 0,
+    "max_land": 10,
+    "supported_states": ["All"],
+    "eligible_crops": ["Dairy"],
+    "description": "Supports dairy farming"
+  },
+  {
+    "scheme_id": "S010",
+    "name": "National Mission on Sustainable Agriculture",
+    "benefit_amount": 20000,
+    "max_income": 300000,
+    "min_land": 1,
+    "max_land": 10,
+    "supported_states": ["All"],
+    "eligible_crops": ["Millets", "Pulses"],
+    "description": "Promotes sustainable farming"
+  }
+]
