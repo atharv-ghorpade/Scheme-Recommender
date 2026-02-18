@@ -33,7 +33,7 @@ export class DatabaseStorage implements IStorage {
     return profile;
   }
 
-  async createProfile(insertProfile: InsertProfile): Promise<Profile> {
+  async createProfile(insertProfile: any): Promise<Profile> {
     const [profile] = await db.insert(profiles).values(insertProfile).returning();
     return profile;
   }
@@ -41,7 +41,7 @@ export class DatabaseStorage implements IStorage {
   async updateProfile(userId: string, updateProfile: Partial<InsertProfile>): Promise<Profile> {
     const [profile] = await db
       .update(profiles)
-      .set({ ...updateProfile, updatedAt: new Date() })
+      .set({ ...updateProfile, updatedAt: new Date() } as any)
       .where(eq(profiles.userId, userId))
       .returning();
     return profile;

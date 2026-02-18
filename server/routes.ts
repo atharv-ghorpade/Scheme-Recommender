@@ -37,9 +37,7 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
       if (existing) {
         profile = await storage.updateProfile(userId, input);
       } else {
-        // userId is handled by the storage layer but we pass it as part of the data
-        // The storage implementation should handle the mapping correctly.
-        profile = await storage.createProfile({ ...input, userId });
+        profile = await storage.createProfile({ ...input, userId } as any);
       }
       res.json(profile);
     } catch (err) {
