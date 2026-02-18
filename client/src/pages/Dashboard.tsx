@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { Loader2, Sparkles, AlertCircle } from "lucide-react";
+import { Loader2, Sparkles, AlertCircle, CheckCircle2, Circle, ArrowRight } from "lucide-react";
 
 import { Navbar } from "@/components/Navbar";
 import { SchemeCard } from "@/components/SchemeCard";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardContent } from "@/components/ui/card";
 
 import { useProfile } from "@/hooks/use-profile";
 import { useGenerateRecommendations } from "@/hooks/use-schemes";
@@ -32,11 +33,18 @@ export default function Dashboard() {
     generate();
   };
 
+  const steps = [
+    { id: 1, label: "Profile Created", completed: !!profile },
+    { id: 2, label: "AI Analysis", completed: hasGenerated || isGenerating },
+    { id: 3, label: "Scheme Selection", completed: recommendations && recommendations.length > 0 },
+  ];
+
   if (isProfileLoading) {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
         <div className="container mx-auto px-4 py-8">
+          <Skeleton className="h-24 w-full mb-8 rounded-xl" />
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map((i) => (
               <Skeleton key={i} className="h-64 w-full rounded-xl" />
@@ -78,13 +86,36 @@ export default function Dashboard() {
       <Navbar />
 
       <main className="container mx-auto px-4 py-8">
+        {/* Progress Tracker */}
+        <Card className="mb-8 border-primary/20 bg-primary/5">
+          <CardContent className="p-6">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <div className="flex items-center gap-6 w-full">
+                {steps.map((step, idx) => (
+                  <div key={step.id} className="flex items-center flex-1 last:flex-none">
+                    <div className="flex flex-col items-center gap-2">
+                      <div className={`p-2 rounded-full ${step.completed ? 'bg-primary text-white' : 'bg-muted text-muted-foreground'}`}>
+                        {step.completed ? <CheckCircle2 className="w-5 h-5" /> : <Circle className="w-5 h-5" />}
+                      </div>
+                      <span className="text-xs font-medium text-center">{step.label}</span>
+                    </div>
+                    {idx < steps.length - 1 && (
+                      <div className={`h-[2px] flex-1 mx-4 ${steps[idx + 1].completed ? 'bg-primary' : 'bg-muted'}`} />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>
             <h1 className="text-3xl font-display font-bold text-foreground">
-              Hello, {profile.userId ? "Farmer" : "Friend"}
+              Welcome, Farmer
             </h1>
             <p className="text-muted-foreground mt-1">
-              Here are schemes tailored for your {profile.landSize} acres in {profile.state}.
+              Analyzing schemes for {profile.landSize} acres in {profile.state}.
             </p>
           </div>
           
@@ -97,12 +128,12 @@ export default function Dashboard() {
             {isGenerating ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Analyzing...
+                Analyzing Profile...
               </>
             ) : (
               <>
                 <Sparkles className="mr-2 h-4 w-4" />
-                Generate Recommendations
+                Find Best Schemes
               </>
             )}
           </Button>

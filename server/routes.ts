@@ -37,6 +37,8 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
       if (existing) {
         profile = await storage.updateProfile(userId, input);
       } else {
+        // userId is handled by the storage layer but we pass it as part of the data
+        // The storage implementation should handle the mapping correctly.
         profile = await storage.createProfile({ ...input, userId });
       }
       res.json(profile);
@@ -44,6 +46,7 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
       if (err instanceof z.ZodError) {
         res.status(400).json({ message: err.errors[0].message });
       } else {
+        console.error("Profile update error:", err);
         res.status(500).json({ message: "Internal Server Error" });
       }
     }
@@ -70,28 +73,46 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
     // AI Logic
     try {
       const prompt = `
-        Based on the following farmer profile, identify which government schemes they are eligible for and explain why.
+        You are an expert Indian agricultural scheme advisor. 
+        Based on the farmer's profile below, identify which government schemes they are eligible for.
         
-        Profile:
-        State: ${profile.state}
-        Land Size: ${profile.landSize} acres
-        Income: ₹${profile.income}
-        Crop: ${profile.crop}
-        Category: ${profile.category || "General"}
+        Farmer Profile:
+        - State: ${profile.state}
+        - Land Size: ${profile.landSize} acres
+        - Annual Income: ₹${profile.income}
+        - Primary Crop: ${profile.crop}
+        - Category: ${profile.category || "General"}
 
-        Available Schemes:
-        ${allSchemes.map(s => `- ID: ${s.id}, Name: ${s.name}, Criteria: ${s.criteria || s.description}, State Filter: ${s.supportedStates?.join(", ") || "All"}`).join('\n')}
+        Available Schemes to evaluate:
+        ${allSchemes.map(s => `
+        - ID: ${s.id}
+        - Name: ${s.name}
+        - Eligibility: ${s.description}
+        - Income Limit: ${s.maxIncome ? `Up to ₹${s.maxIncome}` : "No limit"}
+        - Land Limit: ${s.minLand && s.maxLand ? `${s.minLand} to ${s.maxLand} acres` : "No limit"}
+        - States: ${s.supportedStates?.join(", ") || "All India"}
+        `).join('\n')}
 
-        Return a JSON array of objects, where each object has:
-        - scheme_id: The ID of the matching scheme
-        - explanation: A concise explanation of why they are eligible (1-2 sentences).
+        Evaluation Rules:
+        1. Compare farmer land size and income against scheme limits.
+        2. Check if the farmer's state is supported by the scheme.
+        3. If a scheme is "All India" or "All", it applies to all states.
         
-        Only include eligible schemes.
+        Response Format:
+        Return ONLY a JSON object with a "recommendations" key containing an array of objects:
+        {
+          "recommendations": [
+            {
+              "scheme_id": number,
+              "explanation": "Brief 1-2 sentence reason for eligibility"
+            }
+          ]
+        }
       `;
 
       const response = await openai.chat.completions.create({
-        model: "gpt-5", // Using the latest gpt-5 model
-        messages: [{ role: "user", content: prompt }],
+        model: "gpt-4o", // Use gpt-4o for reliable JSON formatting
+        messages: [{ role: "system", content: "You are a helpful assistant that only returns JSON." }, { role: "user", content: prompt }],
         response_format: { type: "json_object" },
       });
 
@@ -135,7 +156,8 @@ async function seedSchemes() {
       "maxLand": "10",
       "supportedStates": ["All"],
       "eligibleCrops": ["All"],
-      "description": "Income support of Rs 6000 per year"
+      "description": "Income support for small and marginal farmers.",
+      "requiredDocuments": ["Aadhar Card", "Land Ownership Documents", "Bank Passbook"]
     },
     {
       "schemeId": "S002",
@@ -146,7 +168,8 @@ async function seedSchemes() {
       "maxLand": "20",
       "supportedStates": ["All"],
       "eligibleCrops": ["All"],
-      "description": "Crop insurance scheme"
+      "description": "Comprehensive crop insurance against natural calamities.",
+      "requiredDocuments": ["Insurance Proposal Form", "Land Record (7/12)", "Sowing Certificate"]
     },
     {
       "schemeId": "S003",
@@ -157,7 +180,8 @@ async function seedSchemes() {
       "maxLand": "15",
       "supportedStates": ["All"],
       "eligibleCrops": ["All"],
-      "description": "Low interest credit loan"
+      "description": "Low interest institutional credit for agricultural needs.",
+      "requiredDocuments": ["ID Proof", "Address Proof", "Land Tax Receipt"]
     },
     {
       "schemeId": "S004",

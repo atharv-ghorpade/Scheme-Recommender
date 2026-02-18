@@ -28,6 +28,7 @@ export const schemes = pgTable("schemes", {
   maxLand: decimal("max_land", { precision: 10, scale: 2 }),
   supportedStates: jsonb("supported_states").$type<string[]>(),
   eligibleCrops: jsonb("eligible_crops").$type<string[]>(),
+  requiredDocuments: jsonb("required_documents").$type<string[]>(),
 });
 
 export const recommendations = pgTable("recommendations", {
