@@ -1,8 +1,8 @@
-# AgriWise - AI-Powered Agricultural Scheme Recommender
+# Kisan Sathi - AI-Powered Agricultural Scheme Recommender
 
 ## Overview
 
-AgriWise is a full-stack web application that helps Indian farmers discover government agricultural schemes tailored to their profile. Users create a profile with their state, land size, income, crop type, and category. The app then uses AI (OpenAI) to analyze their profile against a database of government schemes and generate personalized recommendations with explanations.
+Kisan Sathi is a full-stack web application that helps Indian farmers discover government agricultural schemes tailored to their profile. Users create a profile with their state, land size, income, crop type, and category. The app then uses AI (OpenAI) to analyze their profile against a database of government schemes and generate personalized recommendations with explanations.
 
 The app follows a monorepo structure with a React frontend, Express backend, PostgreSQL database, and Replit Auth for authentication.
 
