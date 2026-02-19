@@ -20,11 +20,11 @@ export function Navbar() {
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/">
           <div className="flex items-center gap-2 cursor-pointer group">
-            <div className="bg-primary/10 p-2 rounded-lg group-hover:bg-primary/20 transition-colors">
-              <Sprout className="h-6 w-6 text-primary" />
+            <div className="bg-primary/10 p-1 rounded-lg group-hover:bg-primary/20 transition-colors">
+              <img src="/logo.jpeg" alt="Kisan Sathi Logo" className="h-8 w-8 object-contain rounded-md" />
             </div>
             <span className="font-display font-bold text-xl tracking-tight text-foreground">
-              Agri<span className="text-primary">Wise</span>
+              Kisan <span className="text-primary">Sathi</span>
             </span>
           </div>
         </Link>

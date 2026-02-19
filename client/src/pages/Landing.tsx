@@ -108,13 +108,13 @@ export default function Landing() {
       <footer className="border-t py-12 bg-white/40">
         <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-2">
-            <div className="bg-primary/10 p-2 rounded-lg">
-              <Sprout className="h-5 w-5 text-primary" />
+            <div className="bg-primary/10 p-1 rounded-lg">
+              <img src="/logo.jpeg" alt="Kisan Sathi Logo" className="h-6 w-6 object-contain rounded-md" />
             </div>
-            <span className="font-display font-bold text-lg">AgriWise</span>
+            <span className="font-display font-bold text-lg">Kisan Sathi</span>
           </div>
           <p className="text-sm text-muted-foreground">
-            © 2024 AgriWise Platform. All rights reserved.
+            © 2024 Kisan Sathi Platform. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm font-medium text-muted-foreground">
             <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
