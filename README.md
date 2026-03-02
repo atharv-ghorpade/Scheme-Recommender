@@ -1,4 +1,4 @@
-### Create an account on replit after going on the link. 
+# Create an account on replit after going on the link. 
 
 🌾 Scheme Recommender
 AI-Powered Agritech Government Scheme Discovery Platform
